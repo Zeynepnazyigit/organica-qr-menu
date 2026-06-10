@@ -1,0 +1,421 @@
+export type MenuItem = {
+  id: string;
+  name: string;
+  description?: string;
+  descriptionEn?: string;
+  price?: number;
+  priceText?: string;
+  badges?: string[];
+  badgesEn?: string[];
+  variants?: {
+    name: string;
+    nameEn?: string;
+    price?: number;
+    priceText?: string;
+  }[];
+};
+
+export type MenuCategory = {
+  id: string;
+  title: string;
+  subtitle?: string;
+  subtitleEn?: string;
+  items: MenuItem[];
+};
+
+export const menuUpdatedAt = "Haziran 2026";
+
+export const menuData: MenuCategory[] = [
+  {
+    id: "kahvalti",
+    title: "Kahvaltı",
+    subtitle: "Gündüz 10:00 - 14:00 arası servis",
+    subtitleEn: "Breakfast service is available between 10:00 and 14:00.",
+    items: [
+      {
+        id: "serpme-kahvalti",
+        name: "Serpme Kahvaltı",
+        description:
+          "2 kişilik servis edilir. Ezine beyaz peynir, isli Çerkez peynir, kekikli sepet peynir, eski kaşar, ev yapımı reçeller, tereyağı, bal-kaymak, siyah ve yeşil zeytin, humus, domates-salatalık söğüş, yaprak sarma, patates kızartması, sigara böreği, sahanda dilediğiniz yumurta ve sınırsız çay ile.",
+        descriptionEn:
+          "Served for two with Ezine white cheese, smoked Circassian cheese, herbed basket cheese, aged kashar, house jams, butter, honey and clotted cream, olives, hummus, fresh vegetables, stuffed vine leaves, fries, cheese rolls, eggs and unlimited tea.",
+        price: 1950,
+        priceText: "1950 TL / kişi başı +950 TL",
+      },
+      {
+        id: "hafif-kahvalti-tabagi",
+        name: "Hafif Kahvaltı Tabağı",
+        description:
+          "Ezine peynir, eski kaşar, siyah ve yeşil zeytin, söğüş, avokadolu poşe yumurta, 2 çeşit reçel ve 2 bardak çay veya 1 kahve.",
+        descriptionEn:
+          "Ezine cheese, aged kashar, olives, fresh vegetables, poached egg with avocado, two jams and two teas or one coffee.",
+        price: 950,
+      },
+      {
+        id: "menemen",
+        name: "Menemen",
+        price: 375,
+      },
+      {
+        id: "omlet",
+        name: "Sade Omlet Çeşitleri",
+        variants: [
+          { name: "Sade Omlet", nameEn: "Plain omelette", price: 320 },
+          { name: "Beyaz Peynirli", nameEn: "With white cheese", priceText: "+125 TL" },
+          { name: "Sucuklu", nameEn: "With Turkish sausage", priceText: "+150 TL" },
+          { name: "Mantarlı", nameEn: "With mushrooms", priceText: "+100 TL" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "ekmek-ustu",
+    title: "Ekmek Üstü",
+    items: [
+      {
+        id: "avokado-dana-kaburga-ekmek-ustu",
+        name: "Avokadolu Dana Kaburga Füme Ekmek Üstü",
+        description:
+          "Ekşi mayalı ekmek, avokado, pembe domates, dana kaburga füme, poşe yumurta ve Parmesan.",
+        descriptionEn:
+          "Sourdough bread with avocado, pink tomato, smoked beef rib, poached egg and Parmesan.",
+        price: 750,
+      },
+      {
+        id: "gorgonzola-carpaccio-ekmek-ustu",
+        name: "Gorgonzola Dana Carpaccio Ekmek Üstü",
+        description:
+          "Ekşi mayalı ekmek, gorgonzola peyniri, dana Carpaccio, avokado püresi ve roka.",
+        descriptionEn:
+          "Sourdough bread with gorgonzola, beef carpaccio, avocado puree and arugula.",
+        price: 825,
+      },
+      {
+        id: "manda-mozzarella-ekmek-ustu",
+        name: "Manda Mozzarella Ekmek Üstü",
+        description:
+          "Ekşi mayalı ekmek, manda mozzarella, pembe domates, kapari çiçeği ve ızgara istiridye mantarı.",
+        descriptionEn:
+          "Sourdough bread with buffalo mozzarella, pink tomato, caperberry and grilled oyster mushrooms.",
+        price: 700,
+      },
+    ],
+  },
+  {
+    id: "zeytinyaglilar-mezeler",
+    title: "Zeytinyağlılar & Mezeler",
+    subtitle: "Diğer günlük mezeleri öğrenmek için servis personeline sorunuz.",
+    subtitleEn: "Please ask our service staff for other daily meze selections.",
+    items: [
+      { id: "zeytinyagli-portakalli-kereviz", name: "Zeytinyağlı Portakallı Kereviz", price: 450 },
+      { id: "zeytinyagli-yaprak-sarma", name: "Zeytinyağlı Yaprak Sarma", price: 450 },
+      { id: "atom", name: "Atom", price: 400, badges: ["Acılı"], badgesEn: ["Spicy"] },
+      { id: "humus", name: "Humus", price: 400 },
+      { id: "havuc-tarator", name: "Havuç Tarator", price: 400 },
+      { id: "kabak-tarator", name: "Kabak Tarator", price: 400 },
+      { id: "labne-peynirli-koz-patlican", name: "Labne Peynirli Köz Patlıcan", price: 400 },
+      { id: "patlican-salatasi", name: "Patlıcan Salatası", price: 400 },
+    ],
+  },
+  {
+    id: "corbalar",
+    title: "Çorbalar",
+    items: [
+      {
+        id: "firinlanmis-domates-corbasi",
+        name: "Fırınlanmış Domates Çorbası",
+        description: "Kaşar peyniri ve kruton ekmek ile.",
+        descriptionEn: "Roasted tomato soup with kashar cheese and croutons.",
+        price: 375,
+      },
+      {
+        id: "brokoli-corbasi",
+        name: "Brokoli Çorbası",
+        description: "Badem sütlü ve kavrulmuş badem ile.",
+        descriptionEn: "Broccoli soup with almond milk and roasted almonds.",
+        price: 375,
+      },
+      {
+        id: "ayran-asi-corbasi",
+        name: "Ayran Aşı Çorbası",
+        description: "Soğuk servis edilir.",
+        descriptionEn: "Served cold.",
+        price: 375,
+      },
+    ],
+  },
+  {
+    id: "baslangiclar",
+    title: "Başlangıçlar",
+    items: [
+      { id: "usulu-citir-kabak", name: "Usulü Çıtır Kabak", price: 500 },
+      { id: "ege-ot-kavurmasi", name: "Ege Ot Kavurması", price: 575 },
+      { id: "hatay-usulu-icli-kofte", name: "Hatay Usulü İçli Köfte", description: "2 adet.", descriptionEn: "2 pieces.", price: 575 },
+      { id: "karides-tempura", name: "Karides Tempura", price: 975, badges: ["Acılı"], badgesEn: ["Spicy"] },
+      { id: "tereyagli-mantarli-karides", name: "Tereyağlı Mantarlı Karides", price: 975 },
+      { id: "nachos", name: "Nachos", price: 725 },
+      { id: "citir-tavuk", name: "Çıtır Tavuk", price: 725 },
+      { id: "sarkuteri-peynir-tabagi", name: "Şarküteri Peynir Tabağı", price: 1450 },
+      { id: "buratta-manda", name: "Buratta Manda", price: 1200 },
+      {
+        id: "truf-parmesanli-patates",
+        name: "Trüf Parmesanlı Patates Kızartması",
+        variants: [
+          { name: "Trüf Parmesanlı", nameEn: "Truffle Parmesan", price: 495 },
+          { name: "Sade", nameEn: "Plain", price: 425 },
+        ],
+      },
+      { id: "soya-soslu-sebzeli-cin-boregi", name: "Soya Soslu Sebzeli Çin Böreği", price: 600 },
+      { id: "dana-carpaccio", name: "Dana Carpaccio", price: 1200 },
+      { id: "firin-mucver", name: "Fırın Mücver", price: 675 },
+      { id: "sigara-boregi", name: "Sigara Böreği", description: "8 adet.", descriptionEn: "8 pieces.", price: 425 },
+      { id: "pacanga-boregi", name: "Paçanga Böreği", description: "Tek adet.", descriptionEn: "Single piece.", price: 325 },
+      { id: "rokfor-soslu-izgara-enginar-kalbi", name: "Rokfor Soslu Izgara Enginar Kalbi", price: 775 },
+    ],
+  },
+  {
+    id: "pizzalar",
+    title: "Pizzalar",
+    items: [
+      { id: "organica-pizza", name: "Organica Pizza", description: "Domates sos, manda mozzarella, dana bacon ve trüf yağı.", descriptionEn: "Tomato sauce, buffalo mozzarella, beef bacon and truffle oil.", price: 850 },
+      { id: "margherita-pizza", name: "Margherita Pizza", description: "Domates sos, manda mozzarella, fesleğen sos ve zeytinyağı.", descriptionEn: "Tomato sauce, buffalo mozzarella, basil sauce and olive oil.", price: 725 },
+      { id: "ham-mushroom-pizza", name: "Ham Mushroom Pizza", description: "Domates sos, manda mozzarella, dana bacon, mantar ve zeytinyağı.", descriptionEn: "Tomato sauce, buffalo mozzarella, beef bacon, mushrooms and olive oil.", price: 900 },
+      { id: "pizza-alfredo", name: "Pizza Alfredo", description: "Alfredo sos, tavuk, istiridye mantarı ve mozzarella peyniri.", descriptionEn: "Alfredo sauce, chicken, oyster mushrooms and mozzarella.", price: 875 },
+      { id: "tonis-pizza", name: "Toniş Pizza", description: "Ton balığı, rende mozzarella, kapari ve mor soğan.", descriptionEn: "Tuna, grated mozzarella, capers and red onion.", price: 875 },
+      { id: "pepperoni-pizza", name: "Pepperoni Pizza", description: "Domates sos, manda mozzarella ve pepperoni sucuk.", descriptionEn: "Tomato sauce, buffalo mozzarella and pepperoni.", price: 850 },
+      { id: "polpette-pizza", name: "Polpette Pizza", description: "Domates sos, köfte topları, manda mozzarella, karamelize soğan, Jalapeño biber ve maydanoz.", descriptionEn: "Tomato sauce, meatballs, buffalo mozzarella, caramelized onions, jalapeño and parsley.", price: 925, badges: ["Acılı"], badgesEn: ["Spicy"] },
+      { id: "carpaccio-pizza", name: "Carpaccio Pizza", description: "Domates sos, manda mozzarella, pişmiş dana Carpaccio, Parmesan, zeytinyağı ve roka.", descriptionEn: "Tomato sauce, buffalo mozzarella, cooked beef carpaccio, Parmesan, olive oil and arugula.", price: 1000 },
+      { id: "bes-peynirli-pizza", name: "5 Peynirli Pizza", description: "Domates sos, mozzarella, cheddar, gorgonzola, tulum ve Parmesan peyniri.", descriptionEn: "Tomato sauce with mozzarella, cheddar, gorgonzola, tulum and Parmesan cheeses.", price: 800 },
+      { id: "sebzeli-vejetaryen-pizza", name: "Sebzeli Vejetaryen Pizza", description: "Domates sos, patlıcan, kabak, kırmızı ve yeşil biber, mantar, siyah zeytin ve roka.", descriptionEn: "Tomato sauce with eggplant, zucchini, peppers, mushrooms, black olives and arugula.", price: 750 },
+    ],
+  },
+  {
+    id: "ana-yemekler",
+    title: "Ana Yemekler",
+    items: [
+      { id: "izgara-deniz-levregi", name: "Izgara Deniz Levreği", description: "300-350 gr fileto deniz levreği, kapari sos ve roka tulum salata.", descriptionEn: "300-350 g sea bass fillet served with caper sauce and arugula salad with aged tulum cheese.", price: 2000 },
+      { id: "norvec-somon-izgara", name: "Norveç Somon Izgara", description: "200 gr Norveç somon, karnabahar püresi, lor peynirli mevsim sebze ve portakal sos.", descriptionEn: "200 g Norwegian salmon with cauliflower puree, seasonal vegetables with curd cheese and orange sauce.", price: 1300 },
+      { id: "mese-atesinde-dana-bonfile", name: "Meşe Ateşinde Dana Bonfile", price: 1700 },
+      { id: "cafe-de-paris", name: "Cafe de Paris", description: "200 gr dana bonfile, Cafe de Paris sos, mevsim yeşillik ve trüf yağlı patates kızartması.", descriptionEn: "200 g beef tenderloin with Cafe de Paris sauce, seasonal greens and truffle fries.", price: 1800 },
+      { id: "broil-soslu-dana-bonfile", name: "Broil Soslu Dana Bonfile", description: "200 gr dana bonfile, havuç püresi, mevsim sebze ve broil sos eşliğinde.", descriptionEn: "200 g beef tenderloin with carrot puree, seasonal vegetables and broil sauce.", priceText: "Fiyat için servis personeline danışınız" },
+      { id: "dag-kekikli-dana-antrikot", name: "Dağ Kekikli Dana Antrikot", description: "200 gr dana antrikot, havuç püresi, mevsim sebze ve broil sos.", descriptionEn: "200 g beef ribeye with carrot puree, seasonal vegetables and broil sauce.", price: 1650 },
+      { id: "dry-age-dana-pirzola", name: "Dry Age Dana Pirzola", description: "Dry age dinlendirilmiş dana pirzola, sebzeli risotto ve broil sos ile.", descriptionEn: "Dry-aged veal chop served with vegetable risotto and broil sauce.", priceText: "Kg fiyatı 7250 TL" },
+      { id: "organica-karabugdayli-tavuk-izgara", name: "Organica Karabuğdaylı Tavuk Izgara", description: "200 gr tavuk ızgara, mor patates püresi, karabuğday patlakları, peri peri sos ve mevsim sebze.", descriptionEn: "200 g grilled chicken with purple potato puree, puffed buckwheat, peri-peri sauce and seasonal vegetables.", price: 875 },
+      { id: "organica-ali-nazik", name: "Organica Ali Nazik", description: "Köz patlıcan yatağında dana bonfile.", descriptionEn: "Beef tenderloin served on roasted eggplant puree.", price: 1600 },
+      { id: "kuzu-sis-lokum", name: "Kuzu Şiş Lokum", description: "200 gr kuzu lokum, kremalı baby patates, tulum peynirli roka ve broil sos.", descriptionEn: "200 g lamb tender cubes with creamy baby potatoes, arugula with tulum cheese and broil sauce.", priceText: "Fiyat için servis personeline danışınız" },
+      { id: "hellim-kofte", name: "Hellim Köfte", description: "200 gr hellim peynirli köfte, kremalı baby patates ve mevsim yeşillik.", descriptionEn: "200 g halloumi cheese meatballs with creamy baby potatoes and seasonal greens.", price: 925 },
+      { id: "kasap-kofte", name: "Kasap Köfte", description: "200 gr köfte, köz patates püresi ve mevsim yeşillik.", descriptionEn: "200 g butcher-style meatballs with roasted potato puree and seasonal greens.", price: 850 },
+      { id: "visne-kebabi", name: "Vişne Kebabı", description: "Yoğurt sos, ekmek ve vişne soslu köfte.", descriptionEn: "Meatballs with yogurt sauce, bread and sour cherry sauce.", price: 1700 },
+    ],
+  },
+  {
+    id: "salatalar",
+    title: "Salatalar",
+    items: [
+      { id: "izgara-bonfile-salata", name: "Izgara Bonfile Salata", description: "120 gr dana bonfile dilimleri, Akdeniz yeşillikleri, çeri domates, portakal sos, Parmesan peyniri, edamame, yaban mersini ve mevsim meyve.", descriptionEn: "120 g sliced beef tenderloin with Mediterranean greens, cherry tomato, orange dressing, Parmesan, edamame, blueberries and seasonal fruit.", price: 950 },
+      { id: "mozzarella-kuskonmaz-salata", name: "Mozzarella Kuşkonmaz Salata", description: "Manda mozzarella, ızgara kuşkonmaz, roka, domates, edamame ve mevsim meyve.", descriptionEn: "Buffalo mozzarella with grilled asparagus, arugula, tomato, edamame and seasonal fruit.", price: 850 },
+      { id: "fit-tavuk-salata", name: "Fit Tavuk Salata", description: "120 gr tavuk dilimleri, mevsim yeşillik, edamame, yaban mersini, ceviz, keten tohumu ve yoğurt sos.", descriptionEn: "120 g sliced chicken with seasonal greens, edamame, blueberries, walnuts, flaxseed and yogurt sauce.", price: 800 },
+      { id: "susamli-norvec-somon-salata", name: "Susamlı Norveç Somon Salata", description: "Norveç somon dilimleri, mevsim sebzeleri, ananas, susam, pirinç sirkeli sos ve edamame.", descriptionEn: "Norwegian salmon slices with seasonal vegetables, pineapple, sesame, rice vinegar dressing and edamame.", price: 875 },
+      { id: "avokado-esmer-pirinc-salatasi", name: "Avokado Esmer Pirinç Salatası", description: "Esmer pirinç, avokado, mevsim yeşillik, tulum peyniri, domates, edamame ve yaban mersini.", descriptionEn: "Brown rice with avocado, seasonal greens, tulum cheese, tomato, edamame and blueberries.", price: 850 },
+      { id: "hellim-izgara-sebze-salata", name: "Hellim Izgara Sebze Salata", description: "Akdeniz yeşillikleri, ızgara hellim peyniri, ızgara kabak ve patlıcan, domates, edamame ve mevsim meyve.", descriptionEn: "Mediterranean greens with grilled halloumi, grilled zucchini and eggplant, tomato, edamame and seasonal fruit.", price: 825 },
+      { id: "karidesli-salata", name: "Karidesli Salata", description: "Karides, Dijon hardallı roka, avokado, Parmesan peyniri, domates ve edamame.", descriptionEn: "Shrimp with Dijon mustard arugula, avocado, Parmesan, tomato and edamame.", price: 975 },
+      { id: "citir-tavuk-salata", name: "Çıtır Tavuk Salata", description: "Akdeniz yeşillikleri, domates, edamame, soya filizi ve mevsim meyve.", descriptionEn: "Mediterranean greens with tomato, edamame, soybean sprouts and seasonal fruit.", price: 850 },
+      { id: "sezar-salata", name: "Sezar Salata", description: "120 gr ızgara tavuk dilimleri, Sezar sos, marul, Parmesan, kapari, kruton ekmek ve domates.", descriptionEn: "120 g grilled chicken slices with Caesar dressing, lettuce, Parmesan, capers, croutons and tomato.", price: 850 },
+      { id: "enginar-kalbi-salata", name: "Enginar Kalbi Salata", description: "Roka, ızgara enginar, avokado, ızgara yeşil zeytin, ceviz ve domates.", descriptionEn: "Arugula with grilled artichoke, avocado, grilled green olives, walnuts and tomato.", price: 875 },
+    ],
+  },
+  {
+    id: "risottolar",
+    title: "Risottolar",
+    items: [
+      { id: "keci-peynirli-balkabakli-risotto", name: "Keçi Peynirli Balkabaklı Risotto", description: "Arborio pirinci, keçi peyniri, fırınlanmış bal kabağı, beyaz şarap ve taze biberiye.", descriptionEn: "Arborio rice with goat cheese, roasted pumpkin, white wine and fresh rosemary.", price: 875 },
+      { id: "bonfile-risotto", name: "Bonfile Risotto", description: "Arborio pirinci, ızgara bonfile dilimleri, porcini mantarı, beyaz şarap ve Parmesan.", descriptionEn: "Arborio rice with grilled beef tenderloin slices, porcini mushrooms, white wine and Parmesan.", price: 1100 },
+      { id: "uc-mantarli-risotto", name: "Üç Mantarlı Risotto", description: "Arborio pirinci, porcini mantarı, sarıkız mantarı, istiridye mantarı ve Parmesan peyniri.", descriptionEn: "Arborio rice with porcini, chanterelle and oyster mushrooms, finished with Parmesan.", price: 925 },
+      { id: "deniz-mahsullu-risotto", name: "Deniz Mahsullü Risotto", description: "Arborio pirinci, kalamar, karides, somon, beyaz şarap ve Parmesan.", descriptionEn: "Arborio rice with calamari, shrimp, salmon, white wine and Parmesan.", price: 975 },
+      { id: "kuzu-kulagi-levrek-risotto", name: "Kuzu Kulağı Levrek Risotto", description: "200 gr deniz levrek, Arborio pirinci, beyaz şarap, kuzu kulağı püresi ve gorgonzola peyniri.", descriptionEn: "200 g sea bass with Arborio rice, white wine, sorrel puree and gorgonzola.", price: 1350 },
+    ],
+  },
+  {
+    id: "makarnalar",
+    title: "Makarnalar",
+    items: [
+      { id: "fettuccine-alfredo", name: "Fettuccine Alfredo", description: "Dağ kekikli ızgara tavuk, krema, Parmesan, taze fesleğen ve tereyağı.", descriptionEn: "Grilled chicken with thyme, cream, Parmesan, fresh basil and butter.", price: 775 },
+      { id: "deniz-mahsullu-linguine", name: "Deniz Mahsullü Linguine", description: "Izgara karides, somon, kalamar, domates sos, Parmesan, fesleğen, koni domates ve tereyağı.", descriptionEn: "Grilled shrimp, salmon and calamari with tomato sauce, Parmesan, basil, cherry tomato and butter.", price: 875 },
+      { id: "penne-siciliana", name: "Penne Siciliana", description: "Domates sos, siyah zeytin, çeri domates, ızgara patlıcan, acı sos, taze fesleğen ve tereyağı.", descriptionEn: "Tomato sauce with black olives, cherry tomato, grilled eggplant, spicy sauce, fresh basil and butter.", price: 750, badges: ["Acılı"], badgesEn: ["Spicy"] },
+      { id: "spagetti-bolonez", name: "Spagetti Bolonez", description: "Bolonez sos, domates sos, Parmesan ve tereyağı.", descriptionEn: "Bolognese sauce with tomato sauce, Parmesan and butter.", price: 875 },
+      { id: "mantarli-kremali-tagliatelle", name: "Mantarlı Kremalı Tagliatelle", description: "Porcini mantarı, sarıkız mantarı, krema, Parmesan ve tereyağı.", descriptionEn: "Porcini and chanterelle mushrooms with cream, Parmesan and butter.", price: 775 },
+      { id: "siyah-murekkepli-deniz-mahsullu-spagetti", name: "Siyah Mürekkepli Deniz Mahsullü Spagetti", description: "Izgara karides, somon, kalamar, ızgara zeytin, domates sos, fesleğen ve tereyağı.", descriptionEn: "Black ink spaghetti with grilled shrimp, salmon, calamari, grilled olives, tomato sauce, basil and butter.", price: 950 },
+      { id: "glutensiz-penne", name: "Glutensiz Penne", description: "Domates sos, siyah zeytin, patlıcan, fesleğen ve tereyağı.", descriptionEn: "Gluten-free penne with tomato sauce, black olives, eggplant, basil and butter.", price: 775 },
+      { id: "kuzu-kulakli-deniz-levrekli-tam-bugday-spagetti", name: "Kuzu Kulaklı Deniz Levrekli Tam Buğday Spagetti", description: "Kuzu kulak sosu, gorgonzola peyniri ve tam buğdaylı spagetti.", descriptionEn: "Whole wheat spaghetti with sorrel sauce, gorgonzola and sea bass.", price: 1250 },
+    ],
+  },
+  {
+    id: "noodle-kaseler",
+    title: "Noodle & Kaseler",
+    items: [
+      { id: "vegan-noodle", name: "Vegan Noodle", description: "Mevsim sebzeleri, susam ve kaju.", descriptionEn: "Seasonal vegetables with sesame and cashews.", price: 675 },
+      { id: "tavuklu-noodle", name: "Tavuklu Noodle", description: "Mevsim sebzeleri, ızgara tavuk, susam ve kaju.", descriptionEn: "Seasonal vegetables with grilled chicken, sesame and cashews.", price: 750 },
+      { id: "etli-noodle", name: "Etli Noodle", description: "Mevsim sebzeleri, ızgara bonfile dilimleri, susam ve kaju.", descriptionEn: "Seasonal vegetables with grilled beef tenderloin slices, sesame and cashews.", price: 850 },
+      {
+        id: "uzak-dogu-kaseleri",
+        name: "Uzak Doğu Kaseleri",
+        description:
+          "Haşlanmış sebzeler, kestane mantarı, istiridye mantarı, edamame, ıspanak, limon suyu, rice stick, soya filizi ve özel sos ile.",
+        descriptionEn:
+          "Steamed vegetables with chestnut and oyster mushrooms, edamame, spinach, lemon juice, rice sticks, soybean sprouts and house sauce.",
+        variants: [
+          { name: "Izgara Tavuklu", nameEn: "With grilled chicken", price: 800 },
+          { name: "Bonfileli", nameEn: "With beef tenderloin", price: 950 },
+          { name: "Karidesli", nameEn: "With shrimp", price: 975 },
+          { name: "Somonlu", nameEn: "With salmon", price: 975 },
+        ],
+      },
+      { id: "vegan-kase", name: "Vegan Kase", description: "Kestane mantarı, istiridye mantarı, edamame, ıspanak, limon suyu, baby patates ve pesto sos ile.", descriptionEn: "Chestnut and oyster mushrooms with edamame, spinach, lemon juice, baby potatoes and pesto sauce.", price: 725 },
+      {
+        id: "soguk-bowl-tavuk-kofte",
+        name: "Soğuk Bowl",
+        description: "Basmati pirinç, avokado, tavuk, soya filizi, yoğurt sos ve mevsim sebze.",
+        descriptionEn: "Basmati rice with avocado, chicken, soybean sprouts, yogurt sauce and seasonal vegetables.",
+        variants: [
+          { name: "Tavuk", nameEn: "Chicken", price: 750 },
+          { name: "Köfte", nameEn: "Meatballs", price: 850 },
+        ],
+      },
+      {
+        id: "esmer-pirinc-somon-levrek-bowl",
+        name: "Esmer Pirinç Bowl",
+        description: "Esmer pirinç, Norveç somon, edamame, lahana turşusu ve yeşil mercimek.",
+        descriptionEn: "Brown rice with Norwegian salmon, edamame, pickled cabbage and green lentils.",
+        variants: [
+          { name: "Somon", nameEn: "Salmon", price: 950 },
+          { name: "Levrek", nameEn: "Sea bass", price: 1250 },
+        ],
+      },
+      { id: "falafel-bowl", name: "Falafel Bowl", description: "Falafel, pancar, Meksika fasulyesi, humus, kinoa ve göbek.", descriptionEn: "Falafel with beetroot, Mexican beans, hummus, quinoa and lettuce.", price: 750 },
+    ],
+  },
+  {
+    id: "burgerler",
+    title: "Burgerler",
+    items: [
+      { id: "organica-burger", name: "Organica Burger", description: "Hamburger köftesi, isli Boşnak kuru et, karamelize soğan, cheddar peyniri, turşu ve patates kızartması.", descriptionEn: "Beef patty with smoked Bosnian cured beef, caramelized onions, cheddar, pickles and fries.", price: 825 },
+      { id: "cheese-burger", name: "Cheese Burger", description: "Hamburger köftesi, cheddar peyniri, turşu ve patates kızartması.", descriptionEn: "Beef patty with cheddar, pickles and fries.", price: 775 },
+      { id: "trufnica-burger", name: "Trüfnica Burger", description: "Hamburger köftesi, çıtır soğan, cheddar peyniri, trüflü mayonez, turşu, dana bacon ve patates kızartması.", descriptionEn: "Beef patty with crispy onions, cheddar, truffle mayonnaise, pickles, beef bacon and fries.", price: 850 },
+      { id: "steak-burger", name: "Steak Burger", description: "Dana bonfile, cheddar peyniri, dana bacon, karamelize soğan, turşu ve patates kızartması.", descriptionEn: "Beef tenderloin with cheddar, beef bacon, caramelized onions, pickles and fries.", price: 975 },
+      { id: "dana-bacon-burger", name: "Dana Bacon Burger", description: "Hamburger köftesi, dana füme bacon, karamelize soğan, cheddar peyniri, turşu ve patates kızartması.", descriptionEn: "Beef patty with smoked beef bacon, caramelized onions, cheddar, pickles and fries.", price: 875 },
+      { id: "chicken-burger", name: "Chicken Burger", description: "Panelenmiş tavuk, karamelize soğan, turşu ve patates kızartması.", descriptionEn: "Breaded chicken with caramelized onions, pickles and fries.", price: 725 },
+      { id: "vegan-burger", name: "Vegan Burger", description: "Panelenmiş avokado köftesi, karamelize soğan, turşu ve patates kızartması.", descriptionEn: "Breaded avocado patty with caramelized onions, pickles and fries.", price: 725 },
+      { id: "duble-kofte", name: "Duble Köfte", price: 550 },
+    ],
+  },
+  {
+    id: "wrapler",
+    title: "Wrapler",
+    items: [
+      { id: "steak-wrap", name: "Steak Wrap", description: "Jülyen doğranmış bonfile dilimleri, karamelize soğan, renkli biberler, cheddar peyniri, Akdeniz yeşillikleri ve patates kızartması ile.", descriptionEn: "Julienned beef tenderloin with caramelized onions, peppers, cheddar, Mediterranean greens and fries.", price: 850 },
+      { id: "tavuk-wrap", name: "Tavuk Wrap", description: "Jülyen doğranmış tavuk dilimleri, karamelize soğan, renkli biberler, cheddar peyniri, Akdeniz yeşillikleri ve patates kızartması ile.", descriptionEn: "Julienned chicken with caramelized onions, peppers, cheddar, Mediterranean greens and fries.", price: 750 },
+      { id: "mantarinca-wrap", name: "Mantarınca Wrap", description: "Jülyen doğranmış bonfile dilimleri, porcini mantarı, kestane mantarı, karamelize soğan, renkli biberler, cheddar peyniri, Akdeniz yeşillikleri ve patates kızartması ile.", descriptionEn: "Julienned beef tenderloin with porcini and chestnut mushrooms, caramelized onions, peppers, cheddar, Mediterranean greens and fries.", price: 900 },
+    ],
+  },
+  {
+    id: "tatlilar",
+    title: "Tatlılar",
+    items: [
+      {
+        id: "gunun-tatlilari",
+        name: "Tatlılarımız için servis personeline danışınız.",
+        descriptionEn: "Please ask our service staff for today's desserts.",
+        priceText: "Fiyat için servis personeline danışınız",
+      },
+    ],
+  },
+  {
+    id: "soguk-icecekler",
+    title: "Soğuk İçecekler",
+    items: [
+      { id: "coca-cola", name: "Coca-Cola", price: 150 },
+      { id: "coca-cola-zero", name: "Coca-Cola Zero", price: 150 },
+      { id: "fanta", name: "Fanta", price: 150 },
+      { id: "sprite", name: "Sprite", price: 150 },
+      { id: "fuse-tea", name: "Fuse Tea", description: "Şeftali veya limon.", descriptionEn: "Peach or lemon.", price: 150 },
+      { id: "arslan-ayran", name: "Arslan Ayran", price: 125 },
+      { id: "churchill", name: "Churchill", price: 225 },
+      { id: "el-yapimi-limonata", name: "El Yapımı Limonata", price: 250 },
+      { id: "s-pellegrino", name: "S.Pellegrino", variants: [{ name: "330 ml", price: 300 }, { name: "750 ml", price: 575 }] },
+      { id: "soda", name: "Soda", price: 200 },
+      { id: "kestane-su", name: "Kestane Su", price: 100 },
+      { id: "hindistan-cevizi-suyu", name: "Hindistan Cevizi Suyu", price: 275 },
+      { id: "carkifelek-suyu", name: "Çarkıfelek Suyu", price: 275 },
+      { id: "lichee-suyu", name: "Liçi Suyu", price: 275 },
+      { id: "mango-suyu", name: "Mango Suyu", price: 275 },
+    ],
+  },
+  {
+    id: "taze-sikilmis",
+    title: "Taze Sıkılmış",
+    items: [
+      { id: "havuc-elma-zencefil", name: "Havuç Elma Zencefil", price: 325 },
+      { id: "kuzu-kulagi-havuc-limon", name: "Kuzu Kulağı Havuç Limon", price: 325 },
+      { id: "salatalik-havuc-suyu", name: "Salatalık Havuç Suyu", price: 300 },
+      { id: "portakal-suyu", name: "Portakal Suyu", price: 300 },
+    ],
+  },
+  {
+    id: "sicak-icecekler",
+    title: "Sıcak İçecekler",
+    items: [
+      { id: "cay", name: "Çay", price: 75 },
+      { id: "fincan-cay", name: "Fincan Çay", price: 100 },
+      { id: "ada-cayi", name: "Ada Çayı", price: 250 },
+      { id: "ihlamur", name: "Ihlamur", price: 250 },
+      { id: "kis-cayi", name: "Kış Çayı", price: 250 },
+      { id: "yesil-cay", name: "Yeşil Çay", price: 250 },
+    ],
+  },
+  {
+    id: "kahveler",
+    title: "Kahveler",
+    items: [
+      { id: "espresso", name: "Espresso", variants: [{ name: "Tek", nameEn: "Single", price: 200 }, { name: "Double", price: 250 }] },
+      { id: "filtre-kahve", name: "Filtre Kahve", price: 250 },
+      { id: "americano", name: "Americano", price: 250 },
+      { id: "latte", name: "Latte", price: 275 },
+      { id: "cappuccino", name: "Cappuccino", price: 275 },
+      { id: "macchiato", name: "Macchiato", price: 275 },
+      { id: "turk-kahvesi", name: "Türk Kahvesi", price: 225 },
+      { id: "iced-americano-latte", name: "Iced Kahveler", variants: [{ name: "Iced Americano", price: 250 }, { name: "Iced Latte", price: 275 }] },
+    ],
+  },
+  {
+    id: "ilaveler",
+    title: "İlaveler",
+    items: [
+      { id: "badem-sutu", name: "Badem Sütü", price: 100 },
+      { id: "yulaf-sutu", name: "Yulaf Sütü", price: 100 },
+    ],
+  },
+  {
+    id: "ozel-davet-organizasyon",
+    title: "Özel Davet & Organizasyon",
+    items: [
+      {
+        id: "ozel-davet-menu",
+        name: "Özel Davet Menüleri",
+        description:
+          "Toplu yemek, doğum günü ve özel davetler için kişiye özel menü oluşturulmaktadır.",
+        descriptionEn:
+          "Tailored menus are available for group dining, birthdays and private events.",
+        priceText: "Fiyat için servis personeline danışınız",
+      },
+      {
+        id: "ev-organizasyonlari",
+        name: "Ev Organizasyonları",
+        description:
+          "Evlerinizde gerçekleştireceğiniz toplu organizasyonlar için bizden özel fiyat alabilirsiniz.",
+        descriptionEn:
+          "You can contact us for special pricing for private group events at your home.",
+        priceText: "Fiyat için servis personeline danışınız",
+      },
+    ],
+  },
+];

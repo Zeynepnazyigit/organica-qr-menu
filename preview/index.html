@@ -1,0 +1,735 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Organica QR Menü</title>
+    <style>
+      :root {
+        --cream: #f4ead8;
+        --paper: #242321;
+        --olive: #f2e5cb;
+        --olive-2: #d8be8d;
+        --ink: #f6efe4;
+        --muted: #b9aa93;
+        --gold: #c99b58;
+        --rose: #9b4e32;
+        --line: rgba(255, 255, 255, 0.08);
+        --bg: #151514;
+        --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        min-width: 320px;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        animation: page-in 700ms var(--ease) both;
+      }
+
+      header {
+        min-height: min(86vh, 760px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        background:
+          linear-gradient(180deg, rgba(8, 8, 8, 0.58), rgba(15, 15, 14, 0.66) 46%, rgba(21, 21, 20, 0.96)),
+          radial-gradient(circle at 50% 34%, rgba(201, 155, 88, 0.18), transparent 36%),
+          url("./organica-hero.jpeg") center / cover;
+        text-align: center;
+        padding: 58px 18px 52px;
+        position: relative;
+        overflow: hidden;
+        display: grid;
+        place-items: center;
+      }
+
+      header::before,
+      header::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        width: min(82vw, 520px);
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(201, 155, 88, 0.55), transparent);
+        transform: translateX(-50%);
+      }
+
+      header::before {
+        top: 28px;
+      }
+
+      header::after {
+        bottom: 28px;
+      }
+
+      header > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      .logo {
+        color: var(--cream);
+        line-height: 1;
+        transform: translateY(0);
+        transition: transform 700ms var(--ease), opacity 700ms var(--ease);
+      }
+
+      .logo strong {
+        display: block;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(36px, 11vw, 54px);
+        font-weight: 500;
+        letter-spacing: 0.16em;
+        text-shadow: 0 18px 50px rgba(0, 0, 0, 0.7);
+      }
+
+      .logo span {
+        display: block;
+        margin-top: 6px;
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: rgba(246, 239, 228, 0.82);
+      }
+
+      .eyebrow {
+        margin: 28px 0 0;
+        color: var(--gold);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow::before {
+        content: "2009'DAN BERİ";
+        display: block;
+        margin-bottom: 22px;
+        color: rgba(246, 239, 228, 0.74);
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.42em;
+      }
+
+      .hero-title {
+        margin: 22px auto 0;
+        max-width: 720px;
+        color: rgba(246, 239, 228, 0.88);
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(42px, 10vw, 78px);
+        font-weight: 600;
+        line-height: 0.98;
+        text-shadow: 0 24px 70px rgba(0, 0, 0, 0.72);
+      }
+
+      .hero-title em {
+        display: block;
+        margin-top: 8px;
+        color: rgba(246, 239, 228, 0.68);
+        font-size: 0.72em;
+        font-style: italic;
+        font-weight: 400;
+      }
+
+      .hero-copy {
+        max-width: 520px;
+        margin: 24px auto 0;
+        color: rgba(246, 239, 228, 0.58);
+        font-size: 15px;
+        line-height: 1.8;
+      }
+
+      .sub,
+      .updated {
+        margin: 8px 0 0;
+        color: rgba(246, 239, 228, 0.72);
+        font-size: 14px;
+      }
+
+      .updated {
+        margin-top: 4px;
+        color: rgba(246, 239, 228, 0.52);
+        font-size: 12px;
+      }
+
+      main,
+      footer {
+        width: min(100%, 760px);
+        margin: 0 auto;
+        padding: 0 16px;
+      }
+
+      .search {
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        margin: 0 -16px;
+        padding: 14px 16px 13px;
+        background: rgba(21, 21, 20, 0.88);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(18px) saturate(125%);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0);
+        transition: box-shadow 420ms var(--ease), background 420ms var(--ease);
+      }
+
+      .search.is-stuck {
+        background: rgba(18, 18, 17, 0.96);
+        box-shadow: 0 14px 34px rgba(0, 0, 0, 0.28);
+      }
+
+      input {
+        width: 100%;
+        height: 52px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.07);
+        color: var(--ink);
+        font-size: 16px;
+        padding: 0 15px;
+        outline: none;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 10px 24px rgba(0, 0, 0, 0.2);
+        transition: border-color 260ms var(--ease), box-shadow 260ms var(--ease), background 260ms var(--ease), transform 260ms var(--ease);
+      }
+
+      input:focus {
+        border-color: rgba(201, 155, 88, 0.6);
+        background: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 0 0 4px rgba(201, 155, 88, 0.12), 0 16px 34px rgba(0, 0, 0, 0.28);
+        transform: translateY(-1px);
+      }
+
+      .chips {
+        display: flex;
+        gap: 8px;
+        margin-top: 12px;
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+
+      .chips::-webkit-scrollbar {
+        display: none;
+      }
+
+      .chips a {
+        flex: 0 0 auto;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        color: rgba(246, 239, 228, 0.58);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        padding: 10px 6px;
+        text-transform: uppercase;
+        text-decoration: none;
+        box-shadow: none;
+        transition: color 260ms var(--ease), background 260ms var(--ease), border-color 260ms var(--ease), transform 260ms var(--ease), box-shadow 260ms var(--ease);
+      }
+
+      .chips a:hover,
+      .chips a.active {
+        background: transparent;
+        color: var(--cream);
+        box-shadow: none;
+        transform: translateY(-1px);
+      }
+
+      .chips a:active {
+        transform: translateY(0) scale(0.98);
+      }
+
+      .sections {
+        padding: 36px 0 42px;
+      }
+
+      .section-photo {
+        height: clamp(150px, 34vw, 260px);
+        margin: 14px 0 18px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 14px;
+        background-position: center;
+        background-size: cover;
+        box-shadow: inset 0 -80px 80px rgba(0, 0, 0, 0.36), 0 22px 54px rgba(0, 0, 0, 0.26);
+        overflow: hidden;
+      }
+
+      section {
+        scroll-margin-top: 128px;
+        margin-bottom: 32px;
+        animation: section-in 560ms var(--ease) both;
+      }
+
+      h2 {
+        margin: 0 0 4px;
+        color: var(--cream);
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 34px;
+        font-weight: 500;
+        letter-spacing: 0.01em;
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      h2::after {
+        content: "";
+        width: 44px;
+        height: 1px;
+        background: linear-gradient(90deg, rgba(201, 155, 88, 0.8), transparent);
+      }
+
+      .section-note {
+        margin: 0 0 12px;
+        color: rgba(246, 239, 228, 0.58);
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      .item {
+        margin-top: 10px;
+        border: 1px solid var(--line);
+        border-radius: 11px;
+        background:
+          linear-gradient(135deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.035)),
+          #242321;
+        box-shadow: 0 18px 42px rgba(0, 0, 0, 0.22);
+        padding: 18px;
+        position: relative;
+        overflow: hidden;
+        opacity: 0;
+        transform: translateY(18px);
+        transition: opacity 620ms var(--ease), transform 620ms var(--ease), box-shadow 320ms var(--ease), border-color 320ms var(--ease), background 320ms var(--ease);
+      }
+
+      .item-media {
+        height: 168px;
+        margin: -6px -6px 14px;
+        border-radius: 9px;
+        background-color: #111;
+        background-position: center;
+        background-size: cover;
+        box-shadow: inset 0 -70px 70px rgba(0, 0, 0, 0.4);
+      }
+
+      .item--text-only {
+        background:
+          radial-gradient(circle at top right, rgba(201, 155, 88, 0.12), transparent 42%),
+          linear-gradient(135deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.03)),
+          #242321;
+      }
+
+      .item::before {
+        content: "";
+        position: absolute;
+        inset: 0 auto 0 0;
+        width: 3px;
+        background: linear-gradient(180deg, rgba(201, 155, 88, 0.75), rgba(155, 78, 50, 0.18));
+        opacity: 0;
+        transition: opacity 320ms var(--ease);
+      }
+
+      .item.in-view {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .item:hover {
+        border-color: rgba(201, 155, 88, 0.26);
+        box-shadow: 0 24px 54px rgba(0, 0, 0, 0.3);
+        transform: translateY(-2px);
+      }
+
+      .item:hover::before {
+        opacity: 1;
+      }
+
+      .item-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 14px;
+      }
+
+      h3 {
+        margin: 0;
+        font-size: 17px;
+        line-height: 1.35;
+        letter-spacing: 0.01em;
+        font-family: Georgia, "Times New Roman", serif;
+        color: var(--cream);
+      }
+
+      .price {
+        flex: 0 0 auto;
+        color: var(--olive-2);
+        font-size: 14px;
+        font-weight: 800;
+        text-align: right;
+        border-radius: 999px;
+        background: rgba(201, 155, 88, 0.12);
+        padding: 5px 9px;
+      }
+
+      .desc {
+        margin: 8px 0 0;
+        color: rgba(246, 239, 228, 0.68);
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .en {
+        margin: 4px 0 0;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.55;
+      }
+
+      .badge {
+        display: inline-block;
+        margin-top: 8px;
+        border: 1px solid rgba(201, 155, 88, 0.35);
+        border-radius: 999px;
+        background: rgba(201, 155, 88, 0.12);
+        color: var(--cream);
+        font-size: 11px;
+        font-weight: 700;
+        padding: 3px 8px;
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.16);
+      }
+
+      .variants {
+        margin-top: 10px;
+        border-radius: 8px;
+        background: rgba(0, 0, 0, 0.18);
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.07);
+      }
+
+      .variant {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 9px 12px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        font-size: 14px;
+      }
+
+      .variant small {
+        display: block;
+        margin-top: 2px;
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 400;
+      }
+
+      .variant:first-child {
+        border-top: 0;
+      }
+
+      .empty {
+        display: none;
+        margin: 28px 0;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.07);
+        padding: 24px;
+        text-align: center;
+      }
+
+      footer {
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        padding-top: 26px;
+        padding-bottom: 34px;
+      }
+
+      .info {
+        margin-top: 10px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.06);
+        padding: 14px;
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+        transition: transform 280ms var(--ease), box-shadow 280ms var(--ease);
+      }
+
+      .info:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 16px 34px rgba(0, 0, 0, 0.26);
+      }
+
+      .info strong {
+        color: var(--cream);
+        font-size: 14px;
+      }
+
+      .info p {
+        margin: 6px 0 0;
+        color: rgba(246, 239, 228, 0.68);
+        font-size: 14px;
+        line-height: 1.55;
+      }
+
+      @keyframes page-in {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes section-in {
+        from {
+          opacity: 0;
+          transform: translateY(12px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 1ms !important;
+          scroll-behavior: auto !important;
+          transition-duration: 1ms !important;
+        }
+
+        .item {
+          opacity: 1;
+          transform: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+  <header>
+    <div class="logo">
+      <strong>ORGANICA</strong>
+      <span>Restaurant · EST. 2009</span>
+    </div>
+    <p class="eyebrow">QR Menü</p>
+    <h1 class="hero-title">Otantik Lezzet,<em>Zamansız Tat</em></h1>
+    <p class="hero-copy">Organica'nın premium QR menüsü. Taze malzemeler, rafine sunumlar ve İstanbul gecesine yakışan sıcak bir atmosfer.</p>
+    <p class="sub">Gündüz 10:00 - 14:00 arası kahvaltı servisi</p>
+    <p class="updated" id="updated"></p>
+  </header>
+
+  <main>
+    <div class="search">
+      <input id="search" type="search" placeholder="Menüde ara..." />
+      <nav class="chips" id="chips"></nav>
+    </div>
+
+    <div class="sections" id="sections"></div>
+    <div class="empty" id="empty">
+      <h2>Bu aramaya uygun ürün bulunamadı.</h2>
+      <p class="en">(No menu item matches your search.)</p>
+    </div>
+  </main>
+
+  <footer>
+    <div class="info"><strong>Alerjen uyarısı</strong><p>Gıda alerjiniz var ise siparişinizi verirken servis personeline bildirmenizi rica ederiz.</p><p class="en">(If you have any food allergies, please inform our service staff when placing your order.)</p></div>
+    <div class="info"><strong>Özel organizasyon</strong><p>Toplu yemek, doğum günü ve özel davet menüsü oluşturulmaktadır.</p><p class="en">(Group dining, birthday and private event menus are available.)</p></div>
+    <div class="info"><strong>Ev organizasyonları</strong><p>Evlerinizde gerçekleştireceğiniz toplu organizasyonlar için bizden özel fiyat alabilirsiniz.</p><p class="en">(You can contact us for special pricing for private group events at your home.)</p></div>
+    <div class="info"><strong>Menü güncelleme</strong><p id="footer-updated"></p><p class="en" id="footer-updated-en"></p></div>
+  </footer>
+
+  <script type="module">
+    import { menuData as defaultMenuData, menuUpdatedAt as defaultMenuUpdatedAt } from "./menuData.js";
+
+    const savedMenu = await (async () => {
+      try {
+        const response = await fetch("/api/menu", { cache: "no-store" });
+        if (response.ok) {
+          const data = await response.json();
+          if (Array.isArray(data?.menuData)) return data;
+        }
+      } catch {
+        // Static preview fallback.
+      }
+
+      try {
+        const data = JSON.parse(localStorage.getItem("organicaMenuOverride") || "null");
+        return Array.isArray(data?.menuData) ? data : null;
+      } catch {
+        return null;
+      }
+    })();
+
+    const menuData = savedMenu?.menuData || defaultMenuData;
+    const menuUpdatedAt = savedMenu?.updatedAt || defaultMenuUpdatedAt;
+
+    const input = document.querySelector("#search");
+    const chips = document.querySelector("#chips");
+    const sectionsRoot = document.querySelector("#sections");
+    const empty = document.querySelector("#empty");
+    const searchWrap = document.querySelector(".search");
+
+    document.querySelector("#updated").textContent = `Menü güncellenme tarihi: ${menuUpdatedAt}`;
+    document.querySelector("#footer-updated").textContent = `Menü güncellenme tarihi: ${menuUpdatedAt}`;
+    document.querySelector("#footer-updated-en").textContent = `(Menu last updated: ${menuUpdatedAt}.)`;
+
+    const normalize = (value) =>
+      String(value || "").toLocaleLowerCase("tr-TR").normalize("NFD").replace(/\p{Diacritic}/gu, "");
+
+    const formatPrice = (price, priceText) => {
+      if (priceText) return priceText;
+      if (typeof price === "number") return `${price} TL`;
+      return "Fiyat için servis personeline danışınız";
+    };
+
+    const itemPhotos = {
+      "organica-pizza": "./menu-photos/organica-menu-02.jpeg",
+      "margherita-pizza": "./menu-photos/organica-menu-03.jpeg",
+      "dana-carpaccio": "./menu-photos/organica-menu-05.jpeg",
+      "karides-tempura": "./menu-photos/organica-menu-08.jpeg",
+      "uc-mantarli-risotto": "./menu-photos/organica-menu-06.jpeg",
+      "organica-burger": "./menu-photos/organica-menu-07.jpeg",
+      "avokado-esmer-pirinc-salatasi": "./menu-photos/organica-menu-11.jpeg",
+      "havuc-elma-zencefil": "./menu-photos/organica-menu-04.jpeg",
+      "ozel-davet-menu": "./organica-hero.jpeg"
+    };
+
+    const usedPhotos = new Set();
+    const getItemPhoto = (_category, item) => {
+      const photo = itemPhotos[item.id];
+      if (!photo || usedPhotos.has(photo)) return "";
+      usedPhotos.add(photo);
+      return photo;
+    };
+    const escapeHtml = (value) =>
+      String(value || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+
+    const itemSearchText = (item) => [
+      item.name,
+      item.description,
+      item.descriptionEn,
+      ...(item.badges || []),
+      ...(item.badgesEn || []),
+      ...((item.variants || []).flatMap((variant) => [variant.name, variant.nameEn, variant.priceText])),
+    ].filter(Boolean).join(" ");
+
+    const renderItem = (category, item, index = 0) => {
+      const price = formatPrice(item.price, item.priceText);
+      const photo = getItemPhoto(category, item, index);
+      const badges = (item.badges || []).map((badge, index) =>
+        `<span class="badge">${escapeHtml(badge)}${item.badgesEn?.[index] ? ` / ${escapeHtml(item.badgesEn[index])}` : ""}</span>`
+      ).join("");
+      const variants = item.variants?.length
+        ? `<div class="variants">${item.variants.map((variant) => `
+            <div class="variant">
+              <span>${escapeHtml(variant.name)}${variant.nameEn ? `<small>(${escapeHtml(variant.nameEn)})</small>` : ""}</span>
+              <b>${escapeHtml(formatPrice(variant.price, variant.priceText))}</b>
+            </div>`).join("")}</div>`
+        : "";
+
+      return `<article class="item ${photo ? "" : "item--text-only"}" data-search="${escapeHtml(itemSearchText(item))}">
+        ${photo ? `<div class="item-media" style="background-image:url('${photo}')"></div>` : ""}
+        <div class="item-head">
+          <h3>${escapeHtml(item.name)}</h3>
+          ${item.variants?.length ? "" : `<div class="price">${escapeHtml(price)}</div>`}
+        </div>
+        ${badges}
+        ${item.description ? `<p class="desc">${escapeHtml(item.description)}</p>` : ""}
+        ${item.descriptionEn ? `<p class="en">(${escapeHtml(item.descriptionEn)})</p>` : ""}
+        ${variants}
+      </article>`;
+    };
+
+    chips.innerHTML = menuData.map((category) => `<a href="#${category.id}">${escapeHtml(category.title)}</a>`).join("");
+    sectionsRoot.innerHTML = menuData.map((category) => `
+      <section id="${category.id}">
+        <h2>${escapeHtml(category.title)}</h2>
+        ${category.subtitle ? `<p class="section-note">${escapeHtml(category.subtitle)}${category.subtitleEn ? ` <span>(${escapeHtml(category.subtitleEn)})</span>` : ""}</p>` : ""}
+        ${category.items.map((item, index) => renderItem(category, item, index)).join("")}
+      </section>
+    `).join("");
+
+    const items = Array.from(document.querySelectorAll(".item"));
+    const sections = Array.from(document.querySelectorAll("section"));
+    const chipLinks = Array.from(document.querySelectorAll(".chips a"));
+
+    input.addEventListener("input", () => {
+      const query = normalize(input.value.trim());
+      let visibleCount = 0;
+
+      items.forEach((item) => {
+        const haystack = normalize(`${item.textContent} ${item.dataset.search || ""}`);
+        const visible = !query || haystack.includes(query);
+        item.style.display = visible ? "" : "none";
+        if (visible) visibleCount += 1;
+      });
+
+      sections.forEach((section) => {
+        const hasVisible = Array.from(section.querySelectorAll(".item")).some(
+          (item) => item.style.display !== "none",
+        );
+        section.style.display = hasVisible ? "" : "none";
+      });
+
+      empty.style.display = visibleCount ? "none" : "block";
+    });
+
+    const reveal = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("in-view");
+            reveal.unobserve(entry.target);
+          }
+        });
+      },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
+    );
+
+    items.forEach((item, index) => {
+      item.style.transitionDelay = `${Math.min(index * 10, 120)}ms`;
+      reveal.observe(item);
+    });
+
+    const activeSection = new IntersectionObserver(
+      (entries) => {
+        const current = entries.find((entry) => entry.isIntersecting);
+        if (!current) return;
+        chipLinks.forEach((chip) => {
+          chip.classList.toggle("active", chip.getAttribute("href") === `#${current.target.id}`);
+        });
+      },
+      { rootMargin: "-42% 0px -48% 0px", threshold: 0.01 },
+    );
+
+    sections.forEach((section) => activeSection.observe(section));
+
+    const stuckObserver = new IntersectionObserver(
+      ([entry]) => {
+        searchWrap.classList.toggle("is-stuck", !entry.isIntersecting);
+      },
+      { threshold: 0 },
+    );
+
+    stuckObserver.observe(document.querySelector("header"));
+  </script>
+</body>
+</html>
+
+
+
+
+

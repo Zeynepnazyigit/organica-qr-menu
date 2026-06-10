@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Organica Menü Yönetimi</title>
+    <style>
+      :root {
+        --bg: #151514;
+        --panel: #232220;
+        --panel-2: #2b2926;
+        --ink: #f6efe4;
+        --muted: #b9aa93;
+        --gold: #c99b58;
+        --line: rgba(255, 255, 255, 0.1);
+        --danger: #d78265;
+        --ok: #8fbf9a;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-width: 320px;
+        background:
+          linear-gradient(180deg, rgba(21, 21, 20, 0.84), rgba(21, 21, 20, 0.98)),
+          url("./organica-hero.jpeg") center / cover fixed;
+        color: var(--ink);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        border-bottom: 1px solid var(--line);
+        background: rgba(21, 21, 20, 0.9);
+        backdrop-filter: blur(18px);
+      }
+
+      .topbar,
+      main {
+        width: min(100%, 1120px);
+        margin: 0 auto;
+        padding: 18px;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+
+      h1 {
+        margin: 0;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(26px, 6vw, 42px);
+        font-weight: 500;
+        letter-spacing: 0.08em;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: flex-end;
+      }
+
+      button,
+      a.button {
+        appearance: none;
+        border: 1px solid rgba(201, 155, 88, 0.32);
+        border-radius: 8px;
+        background: rgba(201, 155, 88, 0.12);
+        color: var(--ink);
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 40px;
+        padding: 10px 14px;
+        font: inherit;
+        font-size: 13px;
+        font-weight: 800;
+        text-decoration: none;
+        transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
+      }
+
+      button:hover,
+      a.button:hover {
+        background: rgba(201, 155, 88, 0.2);
+        border-color: rgba(201, 155, 88, 0.55);
+        transform: translateY(-1px);
+      }
+
+      button.secondary {
+        border-color: var(--line);
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      button.danger {
+        border-color: rgba(215, 130, 101, 0.45);
+        background: rgba(215, 130, 101, 0.12);
+      }
+
+      main {
+        display: grid;
+        grid-template-columns: 260px minmax(0, 1fr);
+        gap: 16px;
+      }
+
+      aside,
+      .editor,
+      .notice {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: rgba(35, 34, 32, 0.9);
+        box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+      }
+
+      aside {
+        position: sticky;
+        top: 92px;
+        align-self: start;
+        max-height: calc(100vh - 112px);
+        overflow: auto;
+        padding: 12px;
+      }
+
+      .cat-button {
+        width: 100%;
+        justify-content: flex-start;
+        margin: 4px 0;
+        border-color: transparent;
+        background: transparent;
+        color: rgba(246, 239, 228, 0.78);
+        text-align: left;
+      }
+
+      .cat-button.active {
+        border-color: rgba(201, 155, 88, 0.35);
+        background: rgba(201, 155, 88, 0.14);
+        color: var(--ink);
+      }
+
+      .editor {
+        min-width: 0;
+        padding: 18px;
+      }
+
+      .notice {
+        grid-column: 1 / -1;
+        padding: 14px 16px;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .status {
+        color: var(--ok);
+        font-weight: 800;
+      }
+
+      .category-head {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin-bottom: 14px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .item-card {
+        margin-top: 12px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background:
+          radial-gradient(circle at top right, rgba(201, 155, 88, 0.1), transparent 40%),
+          rgba(255, 255, 255, 0.035);
+        padding: 14px;
+      }
+
+      .item-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 12px;
+      }
+
+      .item-title strong {
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 19px;
+        font-weight: 500;
+      }
+
+      label {
+        display: grid;
+        gap: 6px;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+
+      input,
+      textarea {
+        width: 100%;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(8, 8, 8, 0.26);
+        color: var(--ink);
+        font: inherit;
+        font-size: 15px;
+        line-height: 1.5;
+        padding: 10px 11px;
+        outline: none;
+      }
+
+      .admin-password {
+        width: 148px;
+        min-height: 40px;
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      textarea {
+        min-height: 76px;
+        resize: vertical;
+      }
+
+      input:focus,
+      textarea:focus {
+        border-color: rgba(201, 155, 88, 0.56);
+        box-shadow: 0 0 0 3px rgba(201, 155, 88, 0.12);
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .wide {
+        grid-column: 1 / -1;
+      }
+
+      .variant {
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px dashed var(--line);
+      }
+
+      .category-actions,
+      .item-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .empty {
+        padding: 24px;
+        color: var(--muted);
+        text-align: center;
+      }
+
+      @media (max-width: 820px) {
+        .topbar {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .actions {
+          justify-content: flex-start;
+        }
+
+        main {
+          grid-template-columns: 1fr;
+        }
+
+        aside {
+          position: static;
+          max-height: none;
+        }
+
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="topbar">
+        <div>
+          <h1>ORGANICA</h1>
+          <div id="status" class="status">Menü yönetimi hazır.</div>
+        </div>
+        <div class="actions">
+          <input id="admin-password" class="admin-password" type="password" placeholder="Panel şifresi" autocomplete="current-password" />
+          <button id="save">Kaydet</button>
+          <a class="button secondary" href="./index.html?v=admin-preview">Menüyü Gör</a>
+          <button id="export" class="secondary">Yedek Al</button>
+          <button id="import" class="secondary">Yedek Yükle</button>
+          <button id="reset" class="danger">Sıfırla</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="notice">
+        Bu panel menüyü proje dosyasına kaydeder. Kaydettiğiniz değişiklikleri aynı sunucudaki QR menü anında okur; canlı siteye almak için hosting tarafına bu dosyaların yüklenmesi gerekir.
+      </div>
+      <aside id="categories"></aside>
+      <section class="editor" id="editor"></section>
+    </main>
+
+    <input id="file" type="file" accept="application/json" hidden />
+
+    <script type="module">
+      import { menuData as defaultMenuData, menuUpdatedAt as defaultUpdatedAt } from "./menuData.js";
+
+      const storageKey = "organicaMenuOverride";
+      const categoriesRoot = document.querySelector("#categories");
+      const editor = document.querySelector("#editor");
+      const status = document.querySelector("#status");
+      const fileInput = document.querySelector("#file");
+      const passwordInput = document.querySelector("#admin-password");
+      passwordInput.value = sessionStorage.getItem("organicaAdminPassword") || "";
+
+      const clone = (value) => JSON.parse(JSON.stringify(value));
+      const slugify = (value) =>
+        String(value || "urun")
+          .toLocaleLowerCase("tr-TR")
+          .normalize("NFD")
+          .replace(/\p{Diacritic}/gu, "")
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/(^-|-$)/g, "") || "urun";
+
+      const loadState = async () => {
+        try {
+          const response = await fetch("/api/menu", { cache: "no-store" });
+          if (response.ok) {
+            const saved = await response.json();
+            if (Array.isArray(saved?.menuData)) return saved;
+          }
+        } catch {
+          // Static preview fallback.
+        }
+
+        try {
+          const saved = JSON.parse(localStorage.getItem(storageKey) || "null");
+          if (Array.isArray(saved?.menuData)) return saved;
+        } catch {
+          localStorage.removeItem(storageKey);
+        }
+        return { menuData: clone(defaultMenuData), updatedAt: defaultUpdatedAt };
+      };
+
+      let state = await loadState();
+      let activeCategoryId = state.menuData[0]?.id || "";
+
+      const setStatus = (text) => {
+        status.textContent = text;
+      };
+
+      const requestHeaders = () => ({
+        "Content-Type": "application/json",
+        "x-admin-password": passwordInput.value.trim(),
+      });
+
+      const category = () => state.menuData.find((item) => item.id === activeCategoryId) || state.menuData[0];
+
+      const updateItem = (item, key, value) => {
+        if (key === "price") {
+          const numberValue = Number(value);
+          if (value === "" || Number.isNaN(numberValue)) delete item.price;
+          else item.price = numberValue;
+          return;
+        }
+        if (value === "") delete item[key];
+        else item[key] = value;
+      };
+
+      const renderCategories = () => {
+        categoriesRoot.innerHTML = state.menuData.map((cat) => `
+          <button class="cat-button ${cat.id === activeCategoryId ? "active" : ""}" data-category="${cat.id}">
+            ${cat.title}
+          </button>
+        `).join("");
+      };
+
+      const renderEditor = () => {
+        const cat = category();
+        if (!cat) {
+          editor.innerHTML = `<div class="empty">Kategori bulunamadı.</div>`;
+          return;
+        }
+
+        editor.innerHTML = `
+          <div class="category-head">
+            <div class="grid">
+              <label>Kategori adı
+                <input data-category-field="title" value="${escapeAttr(cat.title)}" />
+              </label>
+              <label>Alt bilgi
+                <input data-category-field="subtitle" value="${escapeAttr(cat.subtitle || "")}" />
+              </label>
+              <label class="wide">İngilizce alt bilgi
+                <input data-category-field="subtitleEn" value="${escapeAttr(cat.subtitleEn || "")}" />
+              </label>
+            </div>
+            <div class="category-actions">
+              <button id="add-item" class="secondary">Ürün Ekle</button>
+            </div>
+          </div>
+          ${cat.items.map((item, itemIndex) => renderItem(item, itemIndex)).join("")}
+        `;
+      };
+
+      const renderItem = (item, itemIndex) => `
+        <article class="item-card" data-item-index="${itemIndex}">
+          <div class="item-title">
+            <strong>${escapeHtml(item.name || "Yeni ürün")}</strong>
+            <button class="danger" data-remove-item="${itemIndex}">Sil</button>
+          </div>
+          <div class="grid">
+            <label>Ürün adı
+              <input data-item-field="name" value="${escapeAttr(item.name || "")}" />
+            </label>
+            <label>Fiyat
+              <input data-item-field="price" inputmode="numeric" value="${escapeAttr(item.price ?? "")}" />
+            </label>
+            <label class="wide">Fiyat yazısı
+              <input data-item-field="priceText" value="${escapeAttr(item.priceText || "")}" placeholder="Örn: Fiyat için servis personeline danışınız" />
+            </label>
+            <label class="wide">Açıklama
+              <textarea data-item-field="description">${escapeHtml(item.description || "")}</textarea>
+            </label>
+            <label class="wide">İngilizce açıklama
+              <textarea data-item-field="descriptionEn">${escapeHtml(item.descriptionEn || "")}</textarea>
+            </label>
+          </div>
+          ${Array.isArray(item.variants) && item.variants.length ? `
+            <div class="variant">
+              ${item.variants.map((variant, variantIndex) => `
+                <div class="grid variant" data-variant-index="${variantIndex}">
+                  <label>Seçenek adı
+                    <input data-variant-field="name" value="${escapeAttr(variant.name || "")}" />
+                  </label>
+                  <label>Seçenek fiyatı
+                    <input data-variant-field="price" inputmode="numeric" value="${escapeAttr(variant.price ?? "")}" />
+                  </label>
+                  <label>İngilizce seçenek
+                    <input data-variant-field="nameEn" value="${escapeAttr(variant.nameEn || "")}" />
+                  </label>
+                  <label>Seçenek fiyat yazısı
+                    <input data-variant-field="priceText" value="${escapeAttr(variant.priceText || "")}" />
+                  </label>
+                </div>
+              `).join("")}
+            </div>
+          ` : ""}
+        </article>
+      `;
+
+      const render = () => {
+        renderCategories();
+        renderEditor();
+      };
+
+      const save = async () => {
+        const payload = {
+          menuData: state.menuData,
+          updatedAt: new Intl.DateTimeFormat("tr-TR", { month: "long", year: "numeric" }).format(new Date()),
+        };
+        try {
+          const response = await fetch("/api/menu", {
+            method: "POST",
+            headers: requestHeaders(),
+            body: JSON.stringify(payload),
+          });
+          if (response.status === 401) {
+            setStatus("Panel şifresi yanlış. Netlify'de ADMIN_PASSWORD ile aynı olmalı.");
+            return;
+          }
+          if (!response.ok) throw new Error("API kaydı başarısız");
+          localStorage.removeItem(storageKey);
+          state = clone(payload);
+          setStatus("Kaydedildi. QR menü artık güncel dosyayı okuyor.");
+        } catch {
+          localStorage.setItem(storageKey, JSON.stringify(payload));
+          state = clone(payload);
+          setStatus("Dosyaya yazılamadı; bu tarayıcıya kaydedildi.");
+        }
+      };
+
+      const escapeHtml = (value) =>
+        String(value || "")
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;");
+
+      const escapeAttr = escapeHtml;
+
+      categoriesRoot.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-category]");
+        if (!button) return;
+        activeCategoryId = button.dataset.category;
+        render();
+      });
+
+      editor.addEventListener("input", (event) => {
+        const target = event.target;
+        const cat = category();
+        if (!cat) return;
+
+        if (target.matches("[data-category-field]")) {
+          updateItem(cat, target.dataset.categoryField, target.value);
+          renderCategories();
+          return;
+        }
+
+        const card = target.closest("[data-item-index]");
+        if (!card) return;
+        const item = cat.items[Number(card.dataset.itemIndex)];
+        if (!item) return;
+
+        if (target.matches("[data-item-field]")) {
+          updateItem(item, target.dataset.itemField, target.value);
+          if (target.dataset.itemField === "name") {
+            item.id = slugify(target.value);
+            card.querySelector(".item-title strong").textContent = target.value || "Yeni ürün";
+          }
+          return;
+        }
+
+        if (target.matches("[data-variant-field]")) {
+          const variantWrap = target.closest("[data-variant-index]");
+          const variant = item.variants?.[Number(variantWrap.dataset.variantIndex)];
+          if (variant) updateItem(variant, target.dataset.variantField, target.value);
+        }
+      });
+
+      editor.addEventListener("click", (event) => {
+        const cat = category();
+        if (!cat) return;
+
+        if (event.target.id === "add-item") {
+          const id = `yeni-urun-${Date.now()}`;
+          cat.items.push({ id, name: "Yeni Ürün", priceText: "Fiyat giriniz" });
+          renderEditor();
+          setStatus("Yeni ürün eklendi. Kaydetmeyi unutmayın.");
+          return;
+        }
+
+        const remove = event.target.closest("[data-remove-item]");
+        if (remove) {
+          cat.items.splice(Number(remove.dataset.removeItem), 1);
+          renderEditor();
+          setStatus("Ürün silindi. Kaydetmeyi unutmayın.");
+        }
+      });
+
+      document.querySelector("#save").addEventListener("click", () => {
+        save();
+      });
+
+      passwordInput.addEventListener("input", () => {
+        sessionStorage.setItem("organicaAdminPassword", passwordInput.value);
+      });
+
+      document.querySelector("#reset").addEventListener("click", async () => {
+        const confirmed = window.confirm("Menüyü ilk haline döndürmek istiyor musunuz?");
+        if (!confirmed) return;
+        try {
+          const response = await fetch("/api/menu", {
+            method: "DELETE",
+            headers: requestHeaders(),
+          });
+          if (response.status === 401) {
+            setStatus("Panel şifresi yanlış. Sıfırlama yapılmadı.");
+            return;
+          }
+        } catch {
+          // Static preview fallback.
+        }
+        localStorage.removeItem(storageKey);
+        state = { menuData: clone(defaultMenuData), updatedAt: defaultUpdatedAt };
+        activeCategoryId = state.menuData[0]?.id || "";
+        render();
+        setStatus("Menü ilk haline döndü.");
+      });
+
+      document.querySelector("#export").addEventListener("click", () => {
+        const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "organica-menu-yedek.json";
+        link.click();
+        URL.revokeObjectURL(url);
+      });
+
+      document.querySelector("#import").addEventListener("click", () => fileInput.click());
+
+      fileInput.addEventListener("change", async () => {
+        const file = fileInput.files?.[0];
+        if (!file) return;
+        const imported = JSON.parse(await file.text());
+        if (!Array.isArray(imported?.menuData)) {
+          setStatus("Yedek dosyası okunamadı.");
+          return;
+        }
+        state = imported;
+        activeCategoryId = state.menuData[0]?.id || "";
+        await save();
+        render();
+      });
+
+      render();
+    </script>
+  </body>
+</html>

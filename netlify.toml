@@ -1,0 +1,8 @@
+[build]
+  publish = "preview"
+  functions = "netlify/functions"
+
+[[headers]]
+  for = "/api/menu"
+  [headers.values]
+    Cache-Control = "no-store"
