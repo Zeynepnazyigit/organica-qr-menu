@@ -193,6 +193,18 @@
         box-shadow: 0 14px 34px rgba(0, 0, 0, 0.28);
       }
 
+      .sticky-logo {
+        display: flex;
+        justify-content: center;
+        margin: -2px 0 8px;
+      }
+
+      .sticky-logo img {
+        display: block;
+        width: 132px;
+        height: auto;
+      }
+
       input {
         width: 100%;
         height: 52px;
@@ -536,6 +548,9 @@
 
   <main>
     <div class="search">
+      <a class="sticky-logo" href="#" aria-label="Organica menü başlangıcına dön">
+        <img src="./organica-logo.svg?v=2" alt="Organica Restaurant EST. 2009" />
+      </a>
       <input id="search" type="search" placeholder="Menüde ara..." />
       <nav class="chips" id="chips"></nav>
     </div>
