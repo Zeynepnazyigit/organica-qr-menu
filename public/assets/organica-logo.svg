@@ -1,16 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 260" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-labelledby="title desc">
   <title id="title">Organica Restaurant</title>
-  <desc id="desc">Organica Restaurant EST. 2009 logo</desc>
-  <rect width="720" height="260" fill="none"/>
-  <text x="360" y="105" text-anchor="middle" fill="#f6efe4"
-        font-family="Georgia, 'Times New Roman', serif" font-size="76" font-weight="500"
-        letter-spacing="16">ORGANICA</text>
-  <text x="360" y="156" text-anchor="middle" fill="#f6efe4"
-        font-family="Georgia, 'Times New Roman', serif" font-size="28" font-style="italic"
-        letter-spacing="7">REstaurAnt</text>
-  <line x1="214" y1="196" x2="300" y2="196" stroke="#c99b58" stroke-width="2" opacity="0.8"/>
-  <text x="360" y="205" text-anchor="middle" fill="#f6efe4"
-        font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600"
-        letter-spacing="8">EST. 2009</text>
-  <line x1="420" y1="196" x2="506" y2="196" stroke="#c99b58" stroke-width="2" opacity="0.8"/>
+  <desc id="desc">Yuvarlak Organica Restaurant EST. 2009 logosu</desc>
+  <defs>
+    <style>
+      .navy { fill: #0f2d3d; }
+      .cream { fill: #f1e6d2; }
+      .line { fill: none; stroke: #e7dcc5; stroke-width: 3; stroke-linecap: round; }
+      .sun { fill: none; stroke: #6f7a78; stroke-width: 8; stroke-linecap: square; }
+    </style>
+  </defs>
+  <circle class="navy" cx="300" cy="300" r="250"/>
+  <circle class="line" cx="300" cy="300" r="204" opacity="0.92"/>
+  <g transform="translate(300 260)">
+    <path class="sun" d="M-92 0H92"/>
+    <path class="sun" d="M-62 -9L-130 -25"/>
+    <path class="sun" d="M-52 -25L-112 -55"/>
+    <path class="sun" d="M-38 -39L-86 -86"/>
+    <path class="sun" d="M-20 -48L-50 -112"/>
+    <path class="sun" d="M0 -52V-118"/>
+    <path class="sun" d="M20 -48L50 -112"/>
+    <path class="sun" d="M38 -39L86 -86"/>
+    <path class="sun" d="M52 -25L112 -55"/>
+    <path class="sun" d="M62 -9L130 -25"/>
+    <path class="sun" d="M-62 0a62 62 0 0 1 124 0"/>
+  </g>
+  <text x="300" y="366" text-anchor="middle" class="cream"
+        font-family="Georgia, 'Times New Roman', serif" font-size="58" font-weight="700"
+        letter-spacing="1.5">ORGANICA</text>
+  <text x="300" y="420" text-anchor="middle" class="cream"
+        font-family="Georgia, 'Times New Roman', serif" font-size="30" font-weight="400"
+        letter-spacing="4.5">RESTAURANT</text>
+  <text x="300" y="452" text-anchor="middle" class="cream"
+        font-family="Inter, Arial, sans-serif" font-size="19" font-weight="500"
+        letter-spacing="4.5">EST. 2009</text>
 </svg>
