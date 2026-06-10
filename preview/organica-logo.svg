@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 260" role="img" aria-labelledby="title desc">
+  <title id="title">Organica Restaurant</title>
+  <desc id="desc">Organica Restaurant EST. 2009 logo</desc>
+  <rect width="720" height="260" fill="none"/>
+  <text x="360" y="105" text-anchor="middle" fill="#f6efe4"
+        font-family="Georgia, 'Times New Roman', serif" font-size="76" font-weight="500"
+        letter-spacing="16">ORGANICA</text>
+  <text x="360" y="156" text-anchor="middle" fill="#f6efe4"
+        font-family="Georgia, 'Times New Roman', serif" font-size="28" font-style="italic"
+        letter-spacing="7">REstaurAnt</text>
+  <line x1="214" y1="196" x2="300" y2="196" stroke="#c99b58" stroke-width="2" opacity="0.8"/>
+  <text x="360" y="205" text-anchor="middle" fill="#f6efe4"
+        font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600"
+        letter-spacing="8">EST. 2009</text>
+  <line x1="420" y1="196" x2="506" y2="196" stroke="#c99b58" stroke-width="2" opacity="0.8"/>
+</svg>

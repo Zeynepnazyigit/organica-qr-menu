@@ -82,6 +82,14 @@
         transition: transform 700ms var(--ease), opacity 700ms var(--ease);
       }
 
+      .logo img {
+        display: block;
+        width: min(74vw, 360px);
+        height: auto;
+        margin: 0 auto;
+        filter: drop-shadow(0 18px 42px rgba(0, 0, 0, 0.72));
+      }
+
       .logo strong {
         display: block;
         font-family: Georgia, "Times New Roman", serif;
@@ -517,8 +525,7 @@
   <body>
   <header>
     <div class="logo">
-      <strong>ORGANICA</strong>
-      <span>Restaurant · EST. 2009</span>
+      <img src="./organica-logo.svg" alt="Organica Restaurant EST. 2009" />
     </div>
     <p class="eyebrow">QR Menü</p>
     <h1 class="hero-title">Otantik Lezzet,<em>Zamansız Tat</em></h1>
